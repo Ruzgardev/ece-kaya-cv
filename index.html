@@ -38,7 +38,8 @@
       display:flex;
       justify-content:center;
       align-items:flex-start;
-      padding:15px;
+      padding:20px;
+      overflow-x:auto;
     }
     a{ color:var(--linkColor); text-decoration:none; }
     .clearfix::after, .clearfix::before{ content:" "; display:table; }
@@ -58,8 +59,10 @@
       width:210mm;
       min-height:297mm;
       max-width:210mm;
+      min-width:210mm;
       margin:0 auto;
       box-shadow:0 0 10px rgba(0,0,0,0.1);
+      flex-shrink:0;
     }
     .container{ min-height:297mm; }
 
@@ -85,32 +88,7 @@
     .profile .section-padding{ padding:18px 18px 18px 18px; }
     .experience .section-padding{ padding:18px 25px 18px 25px; }
 
-    /* Breakpoints (SCSS mixin karşılığı) */
-    @media (max-width:1500px){
-      .profile .picture-resume img{ width:80px; }
-      .profile .picture-resume{ width:150px; height:150px; }
-    }
-    @media (max-width:1200px){
-      .profile h1{ padding-top:20px; }
-      .profile .picture-resume-wrapper{ width:100%; }
-      .profile .picture-resume img{ width:120px; height:120px; }
-      .profile .picture-resume{ width:200px; height:200px; }
-      .profile .contact-info{ margin-top:70px; }
-      .profile .contact-presentation{ margin-top:70px; margin-bottom:70px; }
-    }
-    @media (max-width:850px){
-      .profile, .experience{ width:100%; }
-      .section-padding{ padding:80px 15% 40px 10%; }
-      .profile .contact-presentation{ margin-top:50px; margin-bottom:50px; }
-    }
-    @media (max-width:450px){
-      .section-padding{ padding:40px 10% 20px 5%; }
-      .profile h1{ font-size:1.8em; padding-top:20px; }
-      .profile .picture-resume{ width:180px; height:180px; }
-      .experience .company-wrapper{ width:100%; margin-bottom:20px; }
-      .experience .job-wrapper{ width:100%; margin-bottom:40px; }
-      .section-wrapper{ width:100%; }
-    }
+    /* Responsive kaldırıldı - Sabit A4 boyutu */
 
     /* Profile */
     .profile .name-wrapper{ display:none; }
@@ -380,61 +358,79 @@
         print-color-adjust: exact !important;
       }
 
-      body {
-        background:#fff;
-        padding:0;
-        margin:0;
-        display:block;
+      html, body {
         width:210mm;
-        height:297mm;
+        height:auto;
+        margin:0;
+        padding:0;
+        background:#fff;
+      }
+
+      body {
+        display:block;
+        overflow:hidden;
       }
 
       /* A4 sabit ölçü */
       .resume-wrapper {
         width:210mm !important;
-        min-height:297mm !important;
+        height:auto !important;
+        min-height:auto !important;
         max-width:210mm !important;
         max-height:297mm !important;
-        margin:0 !important;
+        margin:0 auto !important;
         padding:0 !important;
         box-shadow:none !important;
         background:#fff;
         page-break-after:always;
         overflow:hidden;
+        position:relative;
       }
 
       /* Kolonlar - PDF'te bozulmaması için */
       .profile {
-        width:35% !important;
-        min-height:297mm !important;
+        width:73.5mm !important;
+        height:auto !important;
+        min-height:auto !important;
+        max-height:297mm !important;
         page-break-inside:avoid;
         float:left;
+        position:relative;
+        overflow:hidden;
       }
 
       .experience {
-        width:65% !important;
-        min-height:297mm !important;
+        width:136.5mm !important;
+        height:auto !important;
+        min-height:auto !important;
+        max-height:297mm !important;
         page-break-inside:avoid;
         float:left;
+        position:relative;
+        overflow:hidden;
       }
 
       /* Container ayarları */
       .container {
-        min-height:297mm !important;
+        height:auto !important;
+        min-height:auto !important;
+        max-height:297mm !important;
         padding:0 !important;
+        margin:0 !important;
+        overflow:hidden;
       }
 
       /* Section padding'leri PDF için optimize */
       .section-padding {
-        padding:20px 20px 20px 20px !important;
+        padding:10mm 8mm 10mm 8mm !important;
       }
 
       .profile .section-padding {
-        padding:20px 18px 20px 18px !important;
+        padding:10mm 7mm 10mm 7mm !important;
       }
 
       .experience .section-padding {
-        padding:20px 25px 20px 25px !important;
+        padding:10mm 8mm 10mm 8mm !important;
       }
 
       /* Animasyonları kapat */
@@ -497,9 +493,95 @@
         animation:none !important;
       }
 
+      /* PDF için font ve boşluk optimizasyonları */
+      .experience .name-title {
+        font-size:2.2em !important;
+        margin-bottom:8px !important;
+      }
+
+      .experience .summary-text {
+        font-size:0.8em !important;
+        line-height:1.3em !important;
+        margin-bottom:10px !important;
+      }
+
+      .block {
+        padding:6px 0 !important;
+        margin-bottom:0 !important;
+      }
+
+      .block-title {
+        font-size:0.9em !important;
+        margin-bottom:2px !important;
+      }
+
+      .block-sub {
+        font-size:0.75em !important;
+        margin-bottom:4px !important;
+      }
+
+      .block li {
+        font-size:0.8em !important;
+        line-height:1.25em !important;
+        margin-bottom:1px !important;
+      }
+
+      .block p {
+        font-size:0.8em !important;
+        line-height:1.25em !important;
+        margin-top:4px !important;
+      }
+
+      .section-divider {
+        margin:6px 0 8px 0 !important;
+      }
+
+      .experience h3.experience-title {
+        font-size:0.95em !important;
+        margin-bottom:8px !important;
+      }
+
+      .section-wrapper h3.section-title {
+        font-size:0.95em !important;
+        margin:12px 0 6px 0 !important;
+      }
+
+      .profile .section-title {
+        font-size:0.85em !important;
+        margin:15px 0 10px 0 !important;
+      }
+
+      .profile .info-item {
+        margin-bottom:12px !important;
+      }
+
+      .profile .info-label {
+        font-size:0.8em !important;
+        margin-bottom:3px !important;
+      }
+
+      .profile .info-value {
+        font-size:0.85em !important;
+      }
+
+      .profile .skill-list li {
+        font-size:0.8em !important;
+        margin-bottom:4px !important;
+      }
+
+      .profile .picture-resume-wrapper {
+        margin-bottom:15px !important;
+        margin-top:5px !important;
+      }
+
+      .profile .picture-resume img {
+        width:110px !important;
+        height:110px !important;
+      }
+
       /* @page kuralları */
       @page {
-        size: A4;
+        size: A4 portrait;
         margin: 0;
         padding: 0;
       }
@@ -510,23 +592,7 @@
       }
     }
 
-    /* Ekran görünümü için responsive ayarlar */
-    @media screen and (max-width:900px) {
-      body {
-        padding:10px;
-      }
-      .resume-wrapper {
-        width:100%;
-        max-width:100%;
-        min-height:auto;
-      }
-      .container {
-        min-height:auto;
-      }
-      .experience {
-        min-height:auto;
-      }
-    }
+    /* Responsive kaldırıldı - Her ekranda aynı görünüm */
 
     /* === SAĞ TARAF BLOK TASARIMI (görseldeki gibi) === */
     .block {
@@ -583,10 +649,46 @@
       opacity: .85;
       margin: 8px 0 10px 0;
     }
+
+    /* Print Butonu */
+    .print-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #66cc99;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .print-button:hover {
+      background: #55bb88;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+    }
+
+    .print-button:active {
+      transform: translateY(0);
+    }
+
+    @media print {
+      .print-button {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <button class="print-button" onclick="window.print()">📄 Print / Save as PDF</button>
   <div class="resume-wrapper">
 
     <section class="profile section-padding">
