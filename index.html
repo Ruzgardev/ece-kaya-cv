@@ -352,8 +352,14 @@
 
     /* Print Stilleri - PDF Export için optimize edilmiş */
     @media print {
-      /* Temel ayarlar - Renklerin PDF'te korunması */
+      /* Temel ayarlar - Renklerin PDF'te korunması (Web ve Mobil için aynı) */
       * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      /* Mobil ve Web için ortak print ayarları */
+      html {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
