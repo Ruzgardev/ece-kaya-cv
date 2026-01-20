@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>CV | Resume</title>
+
+  <!-- Google Fonts (SCSS @import yerine) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- SCSS -> CSS dönüştürüldü (tek .html dosyası) --- */
+
+    :root{
+      --profileBg:#3d3e42;
+      --skillsBg:#fff;
+      --profileColor:#9099a0;
+      --skillsColor:#4a4e51;
+      --linkColor:#66cc99;
+      --boldColor:#fff;
+      --time:0.6s;
+    }
+
+    *, *::after, *::before{ box-sizing:border-box; }
+    html, body{ 
+      height:100%; 
+      margin:0;
+      padding:0;
+    }
+    body{
+      margin:0;
+      font-family:'Open Sans', sans-serif;
+      font-size:15px;
+      line-height:1.4em;
+      background:#f6f7f8;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:15px;
+    }
+    a{ color:var(--linkColor); text-decoration:none; }
+    .clearfix::after, .clearfix::before{ content:" "; display:table; }
+    .clearfix::after{ clear:both; }
+    .bold{ color:var(--boldColor); font-weight:400; }
+
+    /* A4 Boyut Ayarları */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    .resume-wrapper{ 
+      position:relative; 
+      text-align:center; 
+      background:#fff;
+      width:210mm;
+      min-height:297mm;
+      max-width:210mm;
+      margin:0 auto;
+      box-shadow:0 0 10px rgba(0,0,0,0.1);
+    }
+    .container{ min-height:297mm; }
+
+    /* Layout */
+    .profile{
+      background:var(--profileBg);
+      width:35%;
+      float:left;
+      color:var(--profileColor);
+      min-height:297mm;
+    }
+    .experience{
+      background:var(--skillsBg);
+      width:65%;
+      float:left;
+      position:relative;
+      color:var(--skillsColor);
+      font-weight:300;
+      min-height:297mm;
+    }
+
+    .section-padding{ padding:18px 20px 18px 20px; }
+    .profile .section-padding{ padding:18px 18px 18px 18px; }
+    .experience .section-padding{ padding:18px 25px 18px 25px; }
+
+    /* Breakpoints (SCSS mixin karşılığı) */
+    @media (max-width:1500px){
+      .profile .picture-resume img{ width:80px; }
+      .profile .picture-resume{ width:150px; height:150px; }
+    }
+    @media (max-width:1200px){
+      .profile h1{ padding-top:20px; }
+      .profile .picture-resume-wrapper{ width:100%; }
+      .profile .picture-resume img{ width:120px; height:120px; }
+      .profile .picture-resume{ width:200px; height:200px; }
+      .profile .contact-info{ margin-top:70px; }
+      .profile .contact-presentation{ margin-top:70px; margin-bottom:70px; }
+    }
+    @media (max-width:850px){
+      .profile, .experience{ width:100%; }
+      .section-padding{ padding:80px 15% 40px 10%; }
+      .profile .contact-presentation{ margin-top:50px; margin-bottom:50px; }
+    }
+    @media (max-width:450px){
+      .section-padding{ padding:40px 10% 20px 5%; }
+      .profile h1{ font-size:1.8em; padding-top:20px; }
+      .profile .picture-resume{ width:180px; height:180px; }
+      .experience .company-wrapper{ width:100%; margin-bottom:20px; }
+      .experience .job-wrapper{ width:100%; margin-bottom:40px; }
+      .section-wrapper{ width:100%; }
+    }
+
+    /* Profile */
+    .profile .name-wrapper{ display:none; }
+    .profile h1{
+      display:none;
+    }
+    .profile li{ margin-bottom:10px; }
+
+    .profile .picture-resume-wrapper{
+      width:100%;
+      display:block;
+      text-align:center;
+      margin-bottom:20px;
+      margin-top:10px;
+    }
+
+    .profile .picture-resume{
+      width:220px;
+      height:220px;
+      background-size:cover;
+      border-radius:50%;
+      margin-right:0;
+      display:table;
+      position:relative;
+      vertical-align:middle;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .profile .picture-resume span{
+      display:table-cell;
+      vertical-align:middle;
+      position:relative;
+      margin:0 auto;
+      z-index:10;
+      text-align:center;
+    }
+    .profile .picture-resume img{
+      border-radius:50%;
+      width:130px;
+      height:130px;
+      object-fit:cover;
+    }
+
+    .profile svg{
+      width:100%;
+      position:absolute;
+      top:0;
+      left:0;
+      pointer-events:none;
+    }
+
+    .profile .st0, .profile .st1{ fill:var(--linkColor); }
+
+    .profile .contact-info{
+      margin-top:15px;
+      font-weight:300;
+    }
+    .profile .info-item{
+      margin-bottom:18px;
+    }
+    .profile .info-label{
+      text-align:left;
+      font-weight:700;
+      color:var(--boldColor);
+      font-size:0.85em;
+      text-transform:uppercase;
+      margin:0 0 4px 0;
+      letter-spacing:0.5px;
+    }
+    .profile .info-value{
+      text-align:left;
+      font-weight:400;
+      color:var(--profileColor);
+      font-size:0.9em;
+      margin:0;
+      line-height:1.4em;
+    }
+
+    .profile .contact-presentation{
+      display:none;
+    }
+
+    .profile .contact-social{
+      margin-top:5px;
+    }
+    .profile .section-title{
+      color:var(--boldColor);
+      text-align:left;
+      text-transform:uppercase;
+      font-size:0.95em;
+      margin:20px 0 15px 0;
+      font-weight:700;
+      letter-spacing:0.5px;
+    }
+    .profile .skill-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+    .profile .skill-list li{
+      margin-bottom:5px;
+      padding-left:15px;
+      position:relative;
+      font-size:0.85em;
+    }
+    .profile .skill-list li::before{
+      content:"•";
+      position:absolute;
+      left:0;
+      color:var(--linkColor);
+      font-size:1.2em;
+    }
+
+    /* Experience */
+    .experience h3.experience-title{
+      color:#000 !important;
+      text-align:left;
+      text-transform:uppercase;
+      font-size:1.05em;
+      margin:0 0 10px 0;
+      font-weight:600;
+    }
+    .experience .name-title{
+      font-size:3em;
+      text-align:left;
+      font-family:'Open Sans', sans-serif;
+      color:#000 !important;
+      text-transform:uppercase;
+      line-height:1em;
+      padding-top:0;
+      margin:0 0 12px 0;
+      font-weight:900;
+      letter-spacing:1px;
+      display:block;
+    }
+
+    .experience .experience-wrapper{ margin-top:10px; }
+
+    .experience .company-wrapper{
+      width:30%;
+      float:left;
+      text-align:left;
+      padding-right:5%;
+      margin-bottom:25px;
+    }
+
+    .experience .job-wrapper{
+      width:70%;
+      float:left;
+      text-align:left;
+      padding-right:5%;
+      margin-bottom:25px;
+    }
+
+    .experience .company-name{ 
+      color:var(--boldColor); 
+      margin-bottom:5px; 
+      font-size:1em;
+      font-weight:600;
+    }
+    .experience .job-title{ 
+      color:var(--boldColor); 
+      margin-bottom:6px; 
+      font-size:1em;
+      font-weight:600;
+    }
+    .experience .time{ 
+      color:rgba(74,78,81,0.7); 
+      font-size:0.9em; 
+      margin-bottom:6px;
+    }
+
+    /* Sections */
+    .section-wrapper{
+      width:50%;
+      float:left;
+      text-align:left;
+      color:var(--skillsColor);
+      font-weight:300;
+      margin-bottom:20px;
+    }
+
+    .section-wrapper:nth-child(3){ padding-right:8%; }
+
+    .section-wrapper h3.section-title{
+      color:#000 !important;
+      text-align:left;
+      text-transform:uppercase;
+      font-size:1.05em;
+      margin:18px 0 8px 0;
+      font-weight:600;
+    }
+    .section-wrapper:first-of-type h3.section-title{
+      margin-top:0;
+    }
+
+    .section-wrapper ul{ list-style:none; padding:0; margin:0; }
+
+    .skill-percentage{
+      margin-bottom:10px;
+      position:relative;
+    }
+    .skill-percentage::after{
+      content:"";
+      width:100%;
+      height:6px;
+      background:var(--boldColor);
+      display:block;
+      margin-top:3px;
+      border-radius:999px;
+      opacity:0.35;
+    }
+    .skill-percentage::before{
+      content:"";
+      height:6px;
+      background:var(--linkColor);
+      position:absolute;
+      margin-top:3px;
+      bottom:0;
+      left:0;
+      border-radius:999px;
+    }
+
+    .skill-percentage:nth-child(1)::before{ width:80%; animation:skill_1 var(--time) ease; }
+    .skill-percentage:nth-child(2)::before{ width:90%; animation:skill_2 var(--time) ease; }
+    .skill-percentage:nth-child(3)::before{ width:50%; animation:skill_3 var(--time) ease; }
+    .skill-percentage:nth-child(4)::before{ width:60%; animation:skill_4 var(--time) ease; }
+    .skill-percentage:nth-child(5)::before{ width:70%; animation:skill_5 var(--time) ease; }
+    .skill-percentage:nth-child(6)::before{ width:70%; animation:skill_6 var(--time) ease; }
+    .skill-percentage:nth-child(7)::before{ width:70%; animation:skill_7 var(--time) ease; }
+
+    @keyframes skill_1{ from{ width:0%; } to{ width:80%; } }
+    @keyframes skill_2{ from{ width:0%; } to{ width:90%; } }
+    @keyframes skill_3{ from{ width:0%; } to{ width:50%; } }
+    @keyframes skill_4{ from{ width:0%; } to{ width:60%; } }
+    @keyframes skill_5{ from{ width:0%; } to{ width:70%; } }
+    @keyframes skill_6{ from{ width:0%; } to{ width:70%; } }
+    @keyframes skill_7{ from{ width:0%; } to{ width:70%; } }
+
+    /* Daha temiz bir görünüm için küçük dokunuşlar */
+    .experience p{ 
+      color:var(--skillsColor); 
+      margin:0 0 5px 0; 
+      font-size:0.9em;
+      line-height:1.5em;
+    }
+    .profile p{ margin:0; color:var(--profileColor); }
+    .experience .summary-text{ 
+      color:var(--skillsColor); 
+      margin-bottom:12px;
+      line-height:1.35em;
+      font-size:0.88em;
+    }
+    .experience .summary-text p{
+      margin:0;
+      line-height:1.35em;
+    }
+    .experience .company-description p{
+      margin-bottom:3px;
+    }
+
+    /* Print Stilleri - PDF Export için optimize edilmiş */
+    @media print {
+      /* Temel ayarlar - Renklerin PDF'te korunması */
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      body {
+        background:#fff;
+        padding:0;
+        margin:0;
+        display:block;
+        width:210mm;
+        height:297mm;
+      }
+
+      /* A4 sabit ölçü */
+      .resume-wrapper {
+        width:210mm !important;
+        min-height:297mm !important;
+        max-width:210mm !important;
+        max-height:297mm !important;
+        margin:0 !important;
+        padding:0 !important;
+        box-shadow:none !important;
+        background:#fff;
+        page-break-after:always;
+        overflow:hidden;
+      }
+
+      /* Kolonlar - PDF'te bozulmaması için */
+      .profile {
+        width:35% !important;
+        min-height:297mm !important;
+        page-break-inside:avoid;
+        float:left;
+      }
+
+      .experience {
+        width:65% !important;
+        min-height:297mm !important;
+        page-break-inside:avoid;
+        float:left;
+      }
+
+      /* Container ayarları */
+      .container {
+        min-height:297mm !important;
+        padding:0 !important;
+      }
+
+      /* Section padding'leri PDF için optimize */
+      .section-padding {
+        padding:20px 20px 20px 20px !important;
+      }
+
+      .profile .section-padding {
+        padding:20px 18px 20px 18px !important;
+      }
+
+      .experience .section-padding {
+        padding:20px 25px 20px 25px !important;
+      }
+
+      /* Animasyonları kapat */
+      .profile svg,
+      .bubble0, .bubble1, .bubble2, .bubble3, .bubble4,
+      .bubble5, .bubble6, .bubble7, .bubble8, .bubble9, .bubble10 {
+        display:none !important;
+        animation:none !important;
+      }
+
+      /* Gölge ve hover efektlerini kaldır */
+      .block {
+        box-shadow:none !important;
+        border:1px solid rgba(0,0,0,0.05) !important;
+      }
+
+      a {
+        text-decoration:none !important;
+      }
+
+      /* Sayfa kırılmalarını kontrol et */
+      .block {
+        page-break-inside:avoid;
+        break-inside:avoid;
+      }
+
+      .experience-wrapper .block {
+        page-break-inside:avoid;
+        break-inside:avoid;
+      }
+
+      .section-wrapper {
+        page-break-inside:avoid;
+        break-inside:avoid;
+      }
+
+      /* Renklerin korunması */
+      .profile {
+        background:var(--profileBg) !important;
+        color:var(--profileColor) !important;
+      }
+
+      .experience {
+        background:var(--skillsBg) !important;
+        color:var(--skillsColor) !important;
+      }
+
+      .block-title {
+        color:#000 !important;
+      }
+
+      .block-sub {
+        color:#666 !important;
+      }
+
+      /* Transition ve transform'ları kapat */
+      * {
+        transition:none !important;
+        transform:none !important;
+        animation:none !important;
+      }
+
+      /* @page kuralları */
+      @page {
+        size: A4;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Script'leri gizle */
+      script {
+        display:none !important;
+      }
+    }
+
+    /* Ekran görünümü için responsive ayarlar */
+    @media screen and (max-width:900px) {
+      body {
+        padding:10px;
+      }
+      .resume-wrapper {
+        width:100%;
+        max-width:100%;
+        min-height:auto;
+      }
+      .container {
+        min-height:auto;
+      }
+      .experience {
+        min-height:auto;
+      }
+    }
+
+    /* === SAĞ TARAF BLOK TASARIMI (görseldeki gibi) === */
+    .block {
+      background: #ffffff;
+      border-radius: 0;
+      padding: 8px 0;
+      margin-bottom: 0;
+      box-shadow: none;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .block:last-child {
+      border-bottom: none;
+    }
+
+    .block-title {
+      font-size: 0.95em;
+      font-weight: 700;
+      color: #000;
+      margin: 0 0 2px 0;
+      line-height: 1.25em;
+    }
+
+    .block-sub {
+      font-size: 0.82em;
+      color: #666;
+      margin-bottom: 5px;
+      line-height: 1.25em;
+    }
+
+    .block ul {
+      margin: 4px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .block li {
+      margin-bottom: 1px;
+      font-size: 0.85em;
+      line-height: 1.3em;
+      color: #333;
+    }
+
+    .block p {
+      margin: 4px 0 0 0;
+      font-size: 0.85em;
+      line-height: 1.3em;
+      color: #333;
+    }
+
+    /* Bölüm başlıkları arası çizgi */
+    .section-divider {
+      height: 1px;
+      background: #000;
+      opacity: .85;
+      margin: 8px 0 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="resume-wrapper">
+
+    <section class="profile section-padding">
+      <div class="container">
+
+        <div class="picture-resume-wrapper">
+          <div class="picture-resume">
+            <span>
+              <img src="image.png" alt="ECE KAYA" />
+            </span>
+
+            <!-- SVG baloncuk çerçevesi -->
+            <svg version="1.1" viewBox="0 0 350 350" aria-hidden="true">
+              <defs>
+                <filter id="goo">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+                  <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -9" result="cm" />
+                </filter>
+              </defs>
+
+              <g filter="url(#goo)">
+                <circle id="main_circle" class="st0" cx="171.5" cy="175.6" r="130"/>
+
+                <!-- bubble0..bubble10 -->
+                <circle class="bubble0 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble1 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble2 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble3 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble4 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble5 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble6 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble7 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble8 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble9 st1" cx="171.5" cy="175.6" r="122.7"/>
+                <circle class="bubble10 st1" cx="171.5" cy="175.6" r="122.7"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="contact-info">
+          <h3 class="section-title">PERSONAL INFORMATION</h3>
+          
+          <div class="info-item">
+            <div class="info-label">PHONE</div>
+            <div class="info-value">0 539 676 66 75</div>
+        </div>
+
+          <div class="info-item">
+            <div class="info-label">EMAIL</div>
+            <div class="info-value">eceekya@gmail.com</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">LOCATION</div>
+            <div class="info-value">Bornova / İzmir, Türkiye</div>
+          </div>
+        </div>
+
+        <div class="contact-social">
+          <h3 class="section-title">LINKEDIN</h3>
+          <div class="info-item">
+            <div class="info-value">
+              <a href="https://www.linkedin.com/in/ece-kaya-92448b209" target="_blank" style="color:var(--linkColor); text-decoration:none;">www.linkedin.com/in/ece-kaya-92448b209</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-section">
+          <h3 class="section-title">SKILLS</h3>
+          <ul class="skill-list">
+            <li>Audit Support & Documentation</li>
+            <li>Financial Analysis & Reporting</li>
+            <li>Microsoft Excel (Intermediate)</li>
+            <li>Time Management</li>
+            <li>Teamwork & Communication</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="experience section-padding">
+      <div class="container">
+        <h1 class="name-title">ECE KAYA</h1>
+        
+        <div class="summary-text">
+          <p>I am an economics graduate with practical experience in auditing and reporting (taught in English). Currently working as an Audit Assistant at PKF İzmir, I manage financial audits, documentation reviews, and the reporting process. I gained banking experience through an internship at Vakıfbank.</p>
+        </div>
+
+        <h3 class="experience-title">WORK EXPERIENCE</h3>
+        <div class="section-divider"></div>
+
+        <div class="experience-wrapper">
+          <div class="block">
+            <div class="block-title">Audit Assistant – PKF İzmir</div>
+            <div class="block-sub">June 2025 – Present</div>
+            <ul>
+              <li>Reviewing financial statements and audit documents</li>
+              <li>Managing and reporting the VAT refund process</li>
+              <li>Participating in compliance checks in accordance with audit standards</li>
+              <li>Organizing audit files and ensuring documentation accuracy</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block-title">Audit Intern – PKF İzmir</div>
+            <div class="block-sub">January 2025 – June 2025</div>
+            <ul>
+              <li>Assisting audit managers during report preparation processes</li>
+              <li>Conducting preliminary research on client companies</li>
+              <li>Collaborating effectively within audit teams</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block-title">Banking Intern – VakıfBank</div>
+            <div class="block-sub">August 2024 – September 2024</div>
+            <ul>
+              <li>Assisting with daily banking operations</li>
+              <li>Knowledge of internal controls and banking workflows</li>
+              <li>Advanced understanding of corporate banking structures</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block-title">Project Management Intern – SCA socail</div>
+            <div class="block-sub">July 2024 – August 2024</div>
+            <ul>
+              <li>Project management fundamentals training</li>
+              <li>Planning and monitoring of supported digital projects</li>
+              <li>Advanced organizational and coordination skills</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block-title">Shift Supervisor (Part-Time) – Pizza Hut</div>
+            <div class="block-sub">June 2023 – February 2025</div>
+            <ul>
+              <li>Managed shift operations and personnel planning</li>
+              <li>Maintaining customer satisfaction in a fast-paced environment</li>
+              <li>Advanced leadership, responsibility, and problem-solving skills</li>
+            </ul>
+          </div>
+            </div>
+
+        <div class="section-wrapper clearfix" style="width:100%; margin-top:20px;">
+          <h3 class="section-title">EDUCATION</h3>
+          <div class="section-divider"></div>
+
+          <div class="block">
+            <div class="block-title">Ege University (GPA: 2.83)</div>
+            <div class="block-sub">September 2020 – January 2026</div>
+            <p>Bachelor's Degree in Economics (English)</p>
+          </div>
+        </div>
+
+        <div class="section-wrapper clearfix" style="width:100%; margin-top:0;">
+          <h3 class="section-title">CERTIFICATIONS</h3>
+          <div class="section-divider"></div>
+
+          <div class="block">
+            <div class="block-title">Digital Marketing</div>
+            <div class="block-sub">Anbean Kampüs – 2025</div>
+        </div>
+
+          <div class="block">
+            <div class="block-title">Financial Statement Analysis</div>
+            <div class="block-sub">Ege Finans Derneği – 2024</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="clearfix"></div>
+  </div>
+
+  <!-- GSAP (TweenMax/TimelineMax/Elastic) - tek dosyada CDN ile -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js" integrity="sha512-I9E4w9zRrR3jN6w4oZsHQLw4i7cGzJfKc7z5mWlQm0m1Sxj3J5E5nE0jB1m2dHcL0c3mX7o1gZz2m0mGd1c0w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    // Orijinal kodun "20" döngüsü SVG'de olmayan bubble'ları hedefliyordu.
+    // Burada bubble0..bubble10 olduğu için 11'e düşürdük.
+
+    var select = function (s) {
+      return document.querySelector(s);
+    };
+
+    function randomBetween(min, max) {
+      var number = Math.floor(Math.random() * (max - min + 1) + min);
+      if (number !== 0) {
+        return number;
+      } else {
+        return 0.5;
+      }
+    }
+
+    var tl = new TimelineMax();
+
+    for (var i = 0; i < 11; i++) {
+      var t = TweenMax.to(select('.bubble' + i), randomBetween(1, 1.5), {
+        x: randomBetween(12, 15) * (randomBetween(-1, 1)),
+        y: randomBetween(12, 15) * (randomBetween(-1, 1)),
+        repeat: -1,
+        repeatDelay: randomBetween(0.2, 0.5),
+        yoyo: true,
+        ease: Elastic.easeOut.config(1, 0.5)
+      });
+
+      tl.add(t, (i + 1) / 0.6);
+    }
+
+    tl.seek(50);
+  </script>
+</body>
+</html>
