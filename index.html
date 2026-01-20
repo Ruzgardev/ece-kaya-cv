@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=210mm, initial-scale=0.5, minimum-scale=0.3, maximum-scale=2, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.3, minimum-scale=0.2, maximum-scale=3, user-scalable=yes" />
   <title>CV | Resume</title>
 
   <!-- Google Fonts (SCSS @import yerine) -->
@@ -380,50 +380,61 @@
       /* A4 sabit ölçü */
       .resume-wrapper {
         width:210mm !important;
-        height:297mm !important;
+        height:auto !important;
         min-height:297mm !important;
         max-width:210mm !important;
-        max-height:297mm !important;
         margin:0 auto !important;
         padding:0 !important;
         box-shadow:none !important;
         background:#fff;
         page-break-after:always;
-        overflow:hidden;
+        overflow:visible;
         position:relative;
+      }
+
+      /* Sol kolon için tam sayfa yüksekliği background */
+      .resume-wrapper::before {
+        content:"";
+        position:absolute;
+        left:0;
+        top:0;
+        width:79.8mm;
+        height:297mm;
+        background:var(--profileBg);
+        z-index:0;
       }
 
       /* Kolonlar - PDF'te bozulmaması için */
       .profile {
         width:79.8mm !important;
-        height:297mm !important;
+        height:auto !important;
         min-height:297mm !important;
-        max-height:297mm !important;
         page-break-inside:avoid;
         float:left;
         position:relative;
-        overflow:hidden;
+        overflow:visible;
+        z-index:1;
       }
 
       .experience {
         width:130.2mm !important;
-        height:297mm !important;
-        min-height:297mm !important;
-        max-height:297mm !important;
+        height:auto !important;
+        min-height:auto !important;
         page-break-inside:avoid;
         float:left;
         position:relative;
-        overflow:hidden;
+        overflow:visible;
+        z-index:1;
       }
 
       /* Container ayarları */
       .container {
-        height:297mm !important;
-        min-height:297mm !important;
-        max-height:297mm !important;
+        height:auto !important;
+        min-height:auto !important;
         padding:0 !important;
         margin:0 !important;
-        overflow:hidden;
+        overflow:visible;
+        position:relative;
       }
 
       /* Section padding'leri PDF için optimize */
@@ -688,6 +699,23 @@
     @media print {
       .print-button {
         display: none !important;
+      }
+      
+      body {
+        padding:0 !important;
+        margin:0 !important;
+      }
+    }
+
+    /* Mobil görünüm için ekstra düzenlemeler */
+    @media screen and (max-width: 768px) {
+      body {
+        padding:10px !important;
+        overflow-x:auto;
+      }
+      
+      .resume-wrapper {
+        transform-origin: top left;
       }
     }
   </style>
